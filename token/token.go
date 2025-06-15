@@ -13,6 +13,8 @@ const (
   PLUS       = "+"
   MINUS      = "-"
   BANG       = "!"
+  BANG_EQUAL = "!="
+  EQUAL      = "=="
   ASTERISK   = "*"
   LESS       = "<"
   GREATER    = ">"
