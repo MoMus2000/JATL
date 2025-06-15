@@ -25,6 +25,21 @@ const (
   LET        = "LET"
 )
 
+var keywords = map[string]TokenType {
+  "fn" : FUNCTION,
+  "let": LET,
+}
+
+func LookupIdent(identString string) TokenType{
+  keyword, found := keywords[identString]
+
+  if !found {
+    return IDENT
+  }
+
+  return keyword
+}
+
 type Token struct {
   Type       TokenType
   Literal    string
