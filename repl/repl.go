@@ -2,7 +2,7 @@ package repl
 
 import (
 	"JATL/lexer"
-	"JATL/token"
+	"JATL/parser"
 	"bufio"
 	"fmt"
 	"io"
@@ -24,9 +24,13 @@ func Start(in io.Reader, out io.Writer){
 
     l := lexer.New(line)
 
-    for tok := l.NextToken(); tok.Type != token.EOF; tok = l.NextToken() {
-      fmt.Printf("%+v\n", tok)
+    p := parser.New(l)
+    program := p.ParseProgram()
+
+    for _, stmt := range program.Statement{
+      fmt.Printf("%+v\n", stmt.String())
     }
+
   }
 
 }
