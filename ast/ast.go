@@ -1,9 +1,13 @@
 package ast
 
-import "JATL/token"
+import (
+	"JATL/token"
+	"bytes"
+)
 
 type Node interface {
   TokenLiteral() string
+  String()       string
 }
 
 type Statement interface {
@@ -18,6 +22,16 @@ type Expression interface {
 
 type Program struct {
   Statement []Statement
+}
+
+func (p *Program) String() string {
+  var out bytes.Buffer
+
+  for _, s := range p.Statement {
+    out.WriteString(s.String())
+  }
+
+  return out.String()
 }
 
 func (p *Program) TokenLiteral() string {
@@ -38,5 +52,9 @@ func (i *Identifier) expressionNode() {
 
 func (i *Identifier) TokenLiteral() string {
   return i.Token.Literal
+}
+
+func (i *Identifier) String() string {
+  return i.Value
 }
 
