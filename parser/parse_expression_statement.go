@@ -2,6 +2,7 @@ package parser
 
 import (
 	"JATL/ast"
+	"JATL/token"
 	"strconv"
 )
 
@@ -10,22 +11,28 @@ func (p *Parser) parseExpressionStatement() ast.Statement{
     Token: p.curToken,
   }
   expr := p.parseExpression(LOWEST)
+
   stmt.Expression = expr
+
+  if p.peekTokenIs(token.SEMICOLON){
+    p.NextToken()
+  }
+
   return  stmt
 }
 
 func (p *Parser) parseIdentifier() ast.Expression{
     return &ast.Identifier{
-    Token: p.curToken,
-    Value: p.curToken.Literal,
+      Token: p.curToken,
+      Value: p.curToken.Literal,
   }
 }
 
 func (p *Parser) parseIntegerLiteral() ast.Expression{
     intVal, _ := strconv.ParseInt(p.curToken.Literal, 10, 64)
     return &ast.IntegerLiteral{
-    Token: p.curToken,
-    Value: intVal,
+      Token: p.curToken,
+      Value: intVal,
   }
 }
 
