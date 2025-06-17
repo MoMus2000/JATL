@@ -35,6 +35,16 @@ func New(l *lexer.Lexer) *Parser{
   p.registerPrefix(token.BANG  , p.parsePrefixExpression)
   p.registerPrefix(token.MINUS , p.parsePrefixExpression)
 
+
+  p.registerInfix(token.PLUS       , p.parseInfixExpression)
+  p.registerInfix(token.MINUS      , p.parseInfixExpression)
+  p.registerInfix(token.ASTERISK   , p.parseInfixExpression)
+  p.registerInfix(token.SLASH      , p.parseInfixExpression)
+  p.registerInfix(token.GREATER    , p.parseInfixExpression)
+  p.registerInfix(token.LESS       , p.parseInfixExpression)
+  p.registerInfix(token.EQUAL      , p.parseInfixExpression)
+  p.registerInfix(token.BANG_EQUAL , p.parseInfixExpression)
+
   return p
 }
 
