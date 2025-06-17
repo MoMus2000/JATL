@@ -36,7 +36,7 @@ func (p *Parser) parseIntegerLiteral() ast.Expression{
   }
 }
 
-func (p *Parser) parseExpression(_ int) ast.Expression {
+func (p *Parser) parseExpression(precedence int) ast.Expression {
   prefix := p.prefixParseFns[p.curToken.Type]
 
   if prefix == nil {
@@ -44,6 +44,16 @@ func (p *Parser) parseExpression(_ int) ast.Expression {
   }
 
   leftExpression := prefix()
+
+  for !p.peekTokenIs(token.SEMICOLON) && precedence < p.peekPrecedence() {
+    infix := p.infixParseFns[p.peekToken.Type]
+    if infix == nil {
+      return leftExpression
+    }
+
+    p.NextToken()
+    leftExpression = infix(leftExpression)
+  }
 
   return leftExpression
 }

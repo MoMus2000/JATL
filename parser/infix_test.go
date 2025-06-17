@@ -3,6 +3,7 @@ package parser
 import (
 	"JATL/ast"
 	"JATL/lexer"
+	"fmt"
 	"testing"
 )
 
@@ -45,6 +46,8 @@ func TestInfixExpression(t *testing.T){
     if !ok {
       t.Errorf("Parsing Error")
     }
+
+    fmt.Println(infix)
 
   }
   
